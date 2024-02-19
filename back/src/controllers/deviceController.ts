@@ -2,10 +2,23 @@ import { Request, Response } from 'express';
 import Device from '../models/deviceModel';
 
 export default class DeviceController {
-  static getAllDevices = async (_req: Request, res: Response) => {
+  static getAllDevices = async (req: Request, res: Response) => {
     console.log("GetAllDevices");
-    const devices = await Device.find();
-    res.status(200).json(devices);
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+    const count = await Device.countDocuments();
+    const results = await Device.find().skip(skip).limit(limit);
+    
+    const next = page * limit < count ? page + 1 : null;
+    const previous = page > 1 ? page - 1 : null;
+
+    res.status(200).json({
+      count,
+      next,
+      previous,
+      results
+    });
   }
 
   static createDevice = async (req: Request, res: Response) => {
@@ -37,4 +50,23 @@ export default class DeviceController {
     await Device.findByIdAndDelete(id);
     res.status(200).json({ message: 'Device deleted successfully' });
   };
+
+  static searchDevicesByName = async (req: Request, res: Response) => {
+    console.log("SearchDevicesByName");
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+    const name = req.params.name;
+    if (!name || typeof name !== 'string') throw new Error('Invalid name');
+    const results = await Device.find({ name: { $regex: new RegExp(name, 'i') } }).skip(skip).limit(limit);
+    const count = results.length;
+    const next = page * limit < count ? page + 1 : null;
+    const previous = page > 1 ? page - 1 : null;
+    res.status(200).json({
+      count,
+      next,
+      previous,
+      results
+    });
+  }
 }
