@@ -1,10 +1,11 @@
 import React from 'react'
+import Layout from './components/layout'
 
 const App: React.FC = () => {
   return (
-    <div className='h-screen w-screen flex items-center justify-center'>
-      <h1 className='font-bold border-b-2'> 🏗️ Virittämö haaste 🚧</h1>
-    </div>
+    <Layout>
+      VIRITTÄMÖ HELSINKI
+    </Layout>
   )
 }
 
