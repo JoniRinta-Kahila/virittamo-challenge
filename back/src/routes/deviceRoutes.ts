@@ -1,15 +1,16 @@
 import express from 'express';
 import DeviceController from '../controllers/deviceController';
+import { handleAsyncError } from '../middlewares/errorHandlingMiddleware';
 
 const router = express.Router();
 
-router.get('/', DeviceController.getAllDevices);
-router.get('/:id', DeviceController.getDeviceById);
+router.get('/', handleAsyncError(DeviceController.getAllDevices));
+router.get('/:id', handleAsyncError(DeviceController.getDeviceById));
 
-router.post('/', DeviceController.createDevice);
+router.post('/', handleAsyncError(DeviceController.createDevice));
 
-router.put('/:id', DeviceController.updateDevice);
+router.put('/:id', handleAsyncError(DeviceController.updateDevice));
 
-router.delete('/:id', DeviceController.deleteDevice);
+router.delete('/:id', handleAsyncError(DeviceController.deleteDevice));
 
 export default router;
