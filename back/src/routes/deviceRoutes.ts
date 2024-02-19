@@ -4,13 +4,15 @@ import { handleAsyncError } from '../middlewares/errorHandlingMiddleware';
 
 const router = express.Router();
 
-router.get('/', handleAsyncError(DeviceController.getAllDevices));
-router.get('/:id', handleAsyncError(DeviceController.getDeviceById));
+router.get('/search/:name', handleAsyncError(DeviceController.searchDevicesByName));
 
-router.post('/', handleAsyncError(DeviceController.createDevice));
+router.route('/:id')
+  .get(handleAsyncError(DeviceController.getDeviceById))
+  .put(handleAsyncError(DeviceController.updateDevice))
+  .delete(handleAsyncError(DeviceController.deleteDevice));
 
-router.put('/:id', handleAsyncError(DeviceController.updateDevice));
-
-router.delete('/:id', handleAsyncError(DeviceController.deleteDevice));
+router.route('/')
+  .get(handleAsyncError(DeviceController.getAllDevices))
+  .post(handleAsyncError(DeviceController.createDevice));
 
 export default router;
