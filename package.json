@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "install": "cd front && npm install",
+    "dev:front": "cd front && npm run dev"
+  }
+}
