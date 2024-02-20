@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import apiUtils from '../apiUtils';
+import InputWithLabel from './inputWithLabel';
 
 interface AddDeviceFormProps {
   deviceId?: string;
@@ -10,19 +12,19 @@ const AddUpdateDeviceForm: React.FC<AddDeviceFormProps> = ({ deviceId }) => {
   const [name, setName] = React.useState('')
   const [manufacturer, setManufacturer] = React.useState('')
   const [deviceNumber, setDeviceNumber] = React.useState('')
+  const { getDeviceById } = apiUtils;
 
   useEffect(() => {
     if (deviceId) {
       // fetch device details and populate the form
-      fetch(`${window.location.protocol}//${window.location.hostname}:3001/api/devices/${deviceId}`)
-        .then((response) => response.json())
+      getDeviceById(deviceId)
         .then((data) => {
           setName(data.name)
           setManufacturer(data.manufacturer)
           setDeviceNumber(data.deviceNumber)
         })
     }
-  }, [deviceId])
+  }, [deviceId, getDeviceById])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,54 +61,32 @@ const AddUpdateDeviceForm: React.FC<AddDeviceFormProps> = ({ deviceId }) => {
         <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <h2 className="text-lg font-semibold leading-6 text-gray-900 col-span-full">Device details</h2>
           <div className="sm:col-span-3">
-            <label htmlFor="device-name" className="block text-sm font-medium leading-6 text-gray-900">
-              Device name
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                name="device-name"
-                id="device-name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                required
-              />
-            </div>
+            <InputWithLabel
+              label="Device name"
+              inputValue={name}
+              setInputValue={setName}
+              id="device-name"
+              required
+            />
+          </div>
+          <div className="sm:col-span-3">
+            <InputWithLabel
+              label="Manufacturer"
+              inputValue={manufacturer}
+              setInputValue={setManufacturer}
+              id="manufacturer"
+              required
+            />
           </div>
 
           <div className="sm:col-span-3">
-            <label htmlFor="manufacturer" className="block text-sm font-medium leading-6 text-gray-900">
-              Manufacturer
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                name="manufacturer"
-                id="manufacturer"
-                value={manufacturer}
-                onChange={(e) => setManufacturer(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="sm:col-span-3">
-            <label htmlFor="device-number" className="block text-sm font-medium leading-6 text-gray-900">
-              Device number
-            </label>
-            <div className="mt-2">
-              <input
-                id="device-number"
-                name="device-number"
-                type="device-number"
-                value={deviceNumber}
-                onChange={(e) => setDeviceNumber(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                required
-              />
-            </div>
+          <InputWithLabel
+              label="Device number"
+              inputValue={deviceNumber}
+              setInputValue={setDeviceNumber}
+              id="device-number"
+              required
+            />
           </div>
         </div>
       </div>

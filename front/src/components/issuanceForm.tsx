@@ -33,7 +33,7 @@ const IssuanceForm: React.FC = () => {
           setSuggestedValues(data.results.map((device) => device.name))
         })
     } catch (error) {
-      //
+      console.error(error)
     }
   }, [deviceName, searchDevicesByName])
 
