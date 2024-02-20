@@ -36,6 +36,13 @@ export default class IssuanceController {
     res.status(200).json(issuance);
   };
 
+  static getIssuancesByDeviceId = async (req: Request, res: Response) => {
+    console.log("GetIssuancesByDeviceId");
+    const { id } = req.params;
+    const issuances = await Issuance.find({ deviceId: id });
+    res.status(200).json(issuances);
+  }
+
   static updateIssuance = async (req: Request, res: Response) => {
     console.log("UpdateIssuance");
     const { id } = req.params;
