@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker";
 import apiUtils from '../apiUtils';
 
-const IssuanceForm: React.FC = () => {
+interface IssuanceFormProps {
+  deviceId?: string;
+}
+
+const IssuanceForm: React.FC<IssuanceFormProps> = ({ deviceId }) => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [dueDate, setDueDate] = useState<Date | null>(null);
 
@@ -12,7 +16,21 @@ const IssuanceForm: React.FC = () => {
   const [manufacturers, setManufacturers] = useState<string[]>([]);
   const [deviceNumbers, setDeviceNumbers] = useState<string[]>([]);
 
-  const { searchDevicesByName, createIssuance } = apiUtils;
+  const [selectedManufacturer, setSelectedManufacturer] = useState<string|undefined>(undefined);
+  const [selectedDeviceNumber, setSelectedDeviceNumber] = useState<string|undefined>(undefined);
+
+  const { searchDevicesByName, createIssuance, getDeviceById } = apiUtils;
+
+  // fetch device details and populate the form
+  useEffect(() => {
+    if (!deviceId) return;
+    getDeviceById(deviceId)
+      .then((data) => {
+        setDeviceName(data.name)
+        setSelectedDeviceNumber(data.deviceNumber)
+        setSelectedManufacturer(data.manufacturer)
+      })
+  }, [deviceId, getDeviceById])
 
   useEffect(() => {
     if (!deviceName) {
@@ -104,11 +122,14 @@ const IssuanceForm: React.FC = () => {
             </label>
             <div className="mt-2">
               <select
+                
                 name="manufacturer"
                 id="manufacturer"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 disabled={manufacturers.length === 0}
-                defaultValue={manufacturers.length > 1 ? '' : manufacturers[0]}
+                // defaultValue={manufacturers.length > 1 ? '' : manufacturers[0]}
+                defaultValue={selectedManufacturer || manufacturers.length > 1 ? '' : manufacturers[0]}
+                onChange={(e) => setSelectedManufacturer(e.target.value)}
                 required
               >
                 {manufacturers.length > 1 && <option value="" disabled selected>Select a manufacturer</option>}
@@ -129,7 +150,9 @@ const IssuanceForm: React.FC = () => {
                 id="device-number"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 disabled={deviceNumbers.length === 0}
-                defaultValue={deviceNumbers.length > 1 ? '' : deviceNumbers[0]}
+                // defaultValue={deviceNumbers.length > 1 ? '' : deviceNumbers[0]}
+                defaultValue={selectedDeviceNumber || deviceNumbers.length > 1 ? '' : deviceNumbers[0]}
+                onChange={(e) => setSelectedDeviceNumber(e.target.value)}
                 required
               >
                 {deviceNumbers.length > 1 && <option value="" disabled selected>Select a device number</option>}

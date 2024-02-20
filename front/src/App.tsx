@@ -14,6 +14,7 @@ const App: React.FC = () => {
         <Route path="/devices" element={<Devices />} />
         <Route path='/devices/device' element={<CreateOrUpdateDevice />} />
         <Route path="/issuance" element={<Issuance />} />
+        <Route path="/issuance/:deviceId" element={<Issuance />} />
         <Route path="/devices/:deviceId" element={<DeviceInfo />} />
         <Route path="/settings" element={<div>Settings</div>} />
         <Route path='*' element={<div>Not found</div>} />
