@@ -12,7 +12,6 @@ const DeviceInfo: React.FC = () => {
 
   useEffect(() => {
     if (!deviceId) return;
-
     getDeviceById(deviceId)
       .then((device) => {
         setDevice(device);
@@ -20,10 +19,9 @@ const DeviceInfo: React.FC = () => {
       .catch((error) => {
         setError(error);
       })
-  })
+  }, [deviceId, getDeviceById])
 
   if (error) return <div>Error: {error.message}</div>
-
   if (!deviceId) return <div>Device id missing</div>
   if (!device) return <div>Loading...</div>
 
