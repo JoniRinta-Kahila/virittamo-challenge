@@ -3,30 +3,31 @@ import { Link } from 'react-router-dom';
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames';
-import { DeviceDocument, DevicesResponse } from '../types';
+import { DeviceDocument } from '../types';
+import apiUtils from '../apiUtils';
 
 const DevicesList: React.FC = () => {
   const [devices, setDevices] = React.useState<DeviceDocument[]>([]);
   const [page, setPage] = React.useState<number | null>(1);
+  const { getDevicesByPage, deleteDeviceById } = apiUtils;
 
   const fetchNextDevices = () => {
-    fetch(`${window.location.protocol}//${window.location.hostname}:3001/api/devices?page=${page}`)
-      .then((response) => response.json())
-      .then((data: DevicesResponse) => {
+    if (!page) return;
+    getDevicesByPage(page)
+      .then((data) => {
         setPage(data.next);
         setDevices([...devices, ...data.results]);
       });
   }
 
   const removeDevice = (id: string) => {
-    fetch(`${window.location.protocol}//${window.location.hostname}:3001/api/devices/${id}`, {
-      method: 'DELETE'
-    })
+    deleteDeviceById(id)
       .then(() => {
         setDevices(devices.filter((device) => device._id !== id));
       });
   }
 
+  // Fetch next devices at the first render
   useEffect(() => {
     fetchNextDevices();
     // eslint-disable-next-line react-hooks/exhaustive-deps

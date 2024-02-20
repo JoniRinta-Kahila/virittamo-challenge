@@ -8,6 +8,11 @@ const getDeviceById = async (id: string): Promise<DeviceDocument> => {
   return await response.json();
 }
 
+const getDevicesByPage = async (page: number): Promise<DevicesResponse> => {
+  const response = await fetch(`${baseUrl}/devices?page=${page}`);
+  return await response.json();
+}
+
 const getIssuancesByDeviceId = async (deviceId: string) => {
   const response = await fetch(`${baseUrl}/issuances/device/${deviceId}`);
   console.log("getIssuancesByDeviceId", response);
@@ -16,6 +21,13 @@ const getIssuancesByDeviceId = async (deviceId: string) => {
 
 const searchDevicesByName = async (name: string): Promise<DevicesResponse> => {
   const response = await fetch(`${baseUrl}/devices/search/${name}`);
+  return await response.json();
+}
+
+const deleteDeviceById = async (id: string) => {
+  const response = await fetch(`${baseUrl}/devices/${id}`, {
+    method: 'DELETE'
+  });
   return await response.json();
 }
 
@@ -35,4 +47,6 @@ export default {
   getIssuancesByDeviceId,
   searchDevicesByName,
   createIssuance,
+  getDevicesByPage,
+  deleteDeviceById,
 }
