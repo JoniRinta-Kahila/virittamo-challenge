@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import deviceRoutes from './routes/deviceRoutes';
+import issuanceRoutes from './routes/issuanceRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -19,6 +20,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => console.log('Connected to MongoDB'));
 
 // Routes
+app.use('/api/issuances', issuanceRoutes);
 app.use('/api/devices', deviceRoutes);
 app.use('/api', (_req, res) => {
   res.json({
