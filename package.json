@@ -1,6 +1,10 @@
 {
   "scripts": {
-    "install": "cd front && npm install",
-    "dev:front": "cd front && npm run dev"
+    "dev:front": "cd front && npm run dev",
+    "dev:back": "cd back && npm start",
+    "start": "concurrently \"npm run dev:front\" \"npm run dev:back\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
