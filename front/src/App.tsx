@@ -1,10 +1,10 @@
 import React from 'react'
 import Layout from './components/layout'
 import { Route, Routes } from 'react-router-dom'
-import Issuance from './pages.tsx/issuance'
-import Devices from './pages.tsx/devices'
-import CreateOrUpdateDevice from './pages.tsx/createOrUpdateDevice'
-import DeviceInfo from './pages.tsx/deviceInfo'
+import Issuance from './pages/issuance'
+import Devices from './pages/devices'
+import CreateOrUpdateDevice from './pages/createOrUpdateDevice'
+import DeviceInfo from './pages/deviceInfo'
 
 const App: React.FC = () => {
   return (
