@@ -2,13 +2,16 @@ import React from 'react'
 import Layout from './components/layout'
 import { Route, Routes } from 'react-router-dom'
 import Issuance from './pages.tsx/issuance'
+import Devices from './pages.tsx/devices'
+import CreateOrUpdateDevice from './pages.tsx/createOrUpdateDevice'
 
 const App: React.FC = () => {
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
-        <Route path="/devices" element={<div>Devices</div>} />
+        <Route path="/devices" element={<Devices />} />
+        <Route path='/devices/device' element={<CreateOrUpdateDevice />} />
         <Route path="/issuance" element={<Issuance />} />
         <Route path="/devices/:deviceId" element={<div>Device details</div>} />
         <Route path="/settings" element={<div>Settings</div>} />
