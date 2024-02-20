@@ -53,7 +53,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
                     </button>
                   </div>
                 </Transition.Child>
-                <Sidebar />
+                <Sidebar setSidebarOpen={setSidebarOpen} />
               </Dialog.Panel>
             </Transition.Child>
           </div>
