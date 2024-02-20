@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useCallback, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
@@ -11,14 +11,14 @@ const DevicesList: React.FC = () => {
   const [page, setPage] = React.useState<number | null>(1);
   const { getDevicesByPage, deleteDeviceById } = apiUtils;
 
-  const fetchNextDevices = () => {
+  const fetchNextDevices =  useCallback(() => {
     if (!page) return;
     getDevicesByPage(page)
       .then((data) => {
         setPage(data.next);
         setDevices([...devices, ...data.results]);
       });
-  }
+  }, [page, devices, getDevicesByPage])
 
   const removeDevice = (id: string) => {
     deleteDeviceById(id)
@@ -30,8 +30,7 @@ const DevicesList: React.FC = () => {
   // Fetch next devices at the first render
   useEffect(() => {
     fetchNextDevices();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [fetchNextDevices])
 
   return (
     <div>

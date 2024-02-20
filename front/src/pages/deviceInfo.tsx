@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import apiUtils from '../apiUtils';
 import { DeviceDocument } from '../types';
+import IssuanceHistoryList from '../components/issuanceHistoryList';
 
 const DeviceInfo: React.FC = () => {
   const { deviceId } = useParams();
@@ -51,6 +52,8 @@ const DeviceInfo: React.FC = () => {
           </div>
         </dl>
       </div>
+      <h3 className="text-base font-semibold leading-7 text-gray-900 mt-8">Issuance History</h3>
+      <IssuanceHistoryList deviceId={deviceId} />
     </div>
   )
 }

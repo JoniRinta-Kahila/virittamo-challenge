@@ -1,4 +1,4 @@
-import { DeviceDocument, DevicesResponse } from "./types";
+import { DeviceDocument, DevicesResponse, IssuanceDocument } from "./types";
 import { DeviceIssuanceInfo } from "../../shared/types/issuanceInfo";
 
 const getDeviceById = async (id: string): Promise<DeviceDocument> => {
@@ -11,9 +11,8 @@ const getDevicesByPage = async (page: number): Promise<DevicesResponse> => {
   return await response.json();
 }
 
-const getIssuancesByDeviceId = async (deviceId: string) => {
+const getIssuancesByDeviceId = async (deviceId: string): Promise<IssuanceDocument[]> => {
   const response = await fetch(`/api/issuances/device/${deviceId}`);
-  console.log("getIssuancesByDeviceId", response);
   return await response.json();
 }
 
