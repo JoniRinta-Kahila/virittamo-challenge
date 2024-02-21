@@ -4,13 +4,16 @@ import { handleAsyncError } from '../middlewares/errorHandlingMiddleware';
 
 const router = express.Router();
 
+// Route for searching devices by name
 router.get('/search/:name', handleAsyncError(DeviceController.searchDevicesByName));
 
+// Routes for individual devices by ID
 router.route('/:id')
   .get(handleAsyncError(DeviceController.getDeviceById))
   .put(handleAsyncError(DeviceController.updateDevice))
   .delete(handleAsyncError(DeviceController.deleteDevice));
 
+// Routes for managing all devices
 router.route('/')
   .get(handleAsyncError(DeviceController.getAllDevices))
   .post(handleAsyncError(DeviceController.createDevice));

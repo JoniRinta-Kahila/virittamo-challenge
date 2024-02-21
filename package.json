@@ -2,7 +2,7 @@
   "scripts": {
     "dev:front": "npm run dev --prefix front",
     "dev:back": "npm run start --prefix back",
-    "start": "concurrently \"npm run dev:front\" \"npm run dev:back\""
+    "start": "concurrently -n Front,Back \"npm run dev:front\" \"npm run dev:back\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
