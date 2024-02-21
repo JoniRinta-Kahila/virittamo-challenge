@@ -36,6 +36,13 @@ export default class DeviceController {
     res.status(201).json(newDevice);
   };
 
+  // Create multiple devices, for testing purposes
+  static createMultipleDevices = async (req: Request, res: Response) => {
+    const devices = req.body;
+    const newDevices = await Device.insertMany(devices);
+    res.status(201).json(newDevices);
+  };
+
   // Retrieve a device by its ID
   static getDeviceById = async (req: Request, res: Response) => {
     const { id } = req.params;

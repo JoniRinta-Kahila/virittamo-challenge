@@ -7,6 +7,9 @@ const router = express.Router();
 // Route for searching devices by name
 router.get('/search/:name', handleAsyncError(DeviceController.searchDevicesByName));
 
+// Route for creating multiple devices, for testing purposes
+router.post('/multiple', handleAsyncError(DeviceController.createMultipleDevices));
+
 // Routes for individual devices by ID
 router.route('/:id')
   .get(handleAsyncError(DeviceController.getDeviceById))

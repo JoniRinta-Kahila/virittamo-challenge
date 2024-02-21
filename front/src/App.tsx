@@ -5,6 +5,7 @@ import Issuance from './pages/issuance'
 import Devices from './pages/devices'
 import CreateOrUpdateDevice from './pages/createOrUpdateDevice'
 import DeviceInfo from './pages/deviceInfo'
+import Settings from './pages/settings'
 
 const App: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const App: React.FC = () => {
         <Route path="/issuance" element={<Issuance />} />
         <Route path="/issuance/:deviceId" element={<Issuance />} />
         <Route path="/devices/:deviceId" element={<DeviceInfo />} />
-        <Route path="/settings" element={<div>Settings</div>} />
+        <Route path="/settings" element={<Settings />} />
         <Route path='*' element={<div>Not found</div>} />
       </Routes>
     </Layout>
