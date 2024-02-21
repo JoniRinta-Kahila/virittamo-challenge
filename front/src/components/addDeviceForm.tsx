@@ -12,7 +12,7 @@ const AddUpdateDeviceForm: React.FC<AddDeviceFormProps> = ({ deviceId }) => {
   const [name, setName] = React.useState('')
   const [manufacturer, setManufacturer] = React.useState('')
   const [deviceNumber, setDeviceNumber] = React.useState('')
-  const { getDeviceById } = apiUtils;
+  const { getDeviceById, postDevice, updateDevice } = apiUtils;
 
   useEffect(() => {
     if (deviceId) {
@@ -30,28 +30,16 @@ const AddUpdateDeviceForm: React.FC<AddDeviceFormProps> = ({ deviceId }) => {
     e.preventDefault();
     if (deviceId) {
       // update device
-      fetch(`${window.location.protocol}//${window.location.hostname}:3001/api/devices/${deviceId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, manufacturer, deviceNumber })
-      })
+      updateDevice(deviceId, { name, manufacturer, deviceNumber })
         .then(() => {
           return navigate('/devices')
-        })
+        });
     } else {
       // create new device
-      fetch(`${window.location.protocol}//${window.location.hostname}:3001/api/devices`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, manufacturer, deviceNumber })
-      })
+      postDevice({ name, manufacturer, deviceNumber })
         .then(() => {
           return navigate('/devices')
-        })
+        });
     }
   }
 
