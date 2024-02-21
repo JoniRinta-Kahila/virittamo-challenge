@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Issuance from '../models/issuanceModel';
+import Devices from '../models/deviceModel';
 
 export default class IssuanceController {
   // Retrieve a paginated list of all issuances
@@ -52,8 +53,14 @@ export default class IssuanceController {
 
   // Retrieve issuances by device ID
   static getIssuancesByDeviceId = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const issuances = await Issuance.find({ deviceId: id });
+    const { deviceId } = req.params;
+    const device = await Devices.findById(deviceId);
+    if (!device) {
+      res.status(404).json({ message: 'Device not found' });
+      res.end();
+      return;
+    }
+    const issuances = await Issuance.find({ 'deviceDetails.deviceNumber': device.deviceNumber });
     res.status(200).json(issuances);
   }
 
