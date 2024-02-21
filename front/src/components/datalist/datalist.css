@@ -1,0 +1,33 @@
+.datalist-container input:focus {
+  border: 1px solid #acabaa;
+  border-radius:4px 4px 0 0;
+}
+
+.datalist-container datalist {
+  margin-top:-1px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #404449;
+  border-radius: 0 0 4px 4px;
+  font-family: sans-serif;
+  padding: 5px;
+  max-height: 10rem;
+  box-shadow: 0px 0px 3px 0px #a5a3a0;
+}
+
+.datalist-container option {
+  padding: 4px;
+  color: #000;
+  margin-bottom: 1px;
+  font-size: 14px;
+  cursor: pointer;
+  display:block;
+}
+
+.datalist-container option:hover {
+  background-color: #1639ff;
+  color: #fff;
+}

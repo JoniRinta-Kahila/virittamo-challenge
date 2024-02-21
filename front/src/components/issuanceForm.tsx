@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker";
 import apiUtils from '../apiUtils';
+import DataList from './datalist/dataList';
+import { useNavigate } from 'react-router-dom';
 
 interface IssuanceFormProps {
   deviceId?: string;
 }
 
 const IssuanceForm: React.FC<IssuanceFormProps> = ({ deviceId }) => {
+  const navigate = useNavigate();
+
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [dueDate, setDueDate] = useState<Date | null>(null);
 
@@ -55,11 +59,6 @@ const IssuanceForm: React.FC<IssuanceFormProps> = ({ deviceId }) => {
     }
   }, [deviceName, searchDevicesByName])
 
-  const handleSelect = (e: React.MouseEvent<HTMLLIElement>) => {
-    setDeviceName(e.currentTarget.textContent || '');
-    setSuggestedValues([]);
-  }
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const device = {
@@ -84,8 +83,7 @@ const IssuanceForm: React.FC<IssuanceFormProps> = ({ deviceId }) => {
       dateOfIssue: issuance.issuedAt!.toISOString(),
       returningDate: issuance.dueDate!.toISOString()
     })
-    .then((data) => console.log(data))
-    .then(() => {})
+    .then(() => navigate(`/devices/`))
     .catch((error) => console.error(error))
   }
 
@@ -99,21 +97,14 @@ const IssuanceForm: React.FC<IssuanceFormProps> = ({ deviceId }) => {
               Device name
             </label>
             <div className="mt-2">
-              <input
-                type="text"
-                name="device-name"
+              <DataList
                 id="device-name"
-                value={deviceName}
-                onChange={(e) => setDeviceName(e.target.value)}
-                className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                required
+                options={suggestedValues}
+                inputValue={deviceName}
+                setInputValue={setDeviceName}
+                className="block w-full px-2 rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
-            {!!suggestedValues.length && <ul className='bg-slate-50 p-2 border-2 border-t-0'>
-              {suggestedValues.map((value) => (
-                <li onClick={handleSelect} className='hover:bg-white cursor-pointer font-semibold' key={value}>{value}</li>
-              ))}
-            </ul>}
           </div>
 
           <div className="sm:col-span-3">

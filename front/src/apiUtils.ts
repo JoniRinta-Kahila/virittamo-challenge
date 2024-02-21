@@ -51,7 +51,7 @@ const deleteDeviceById = async (id: string) => {
   return await response.json();
 }
 
-const createIssuance = async (issuanceInfo: DeviceIssuanceInfo) => {
+const createIssuance = async (issuanceInfo: DeviceIssuanceInfo): Promise<IssuanceDocument> => {
   const response = await fetch(`/api/issuances`, {
     method: 'POST',
     headers: {
