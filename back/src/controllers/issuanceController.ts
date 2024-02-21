@@ -36,6 +36,13 @@ export default class IssuanceController {
     res.status(201).json(newIssuance);
   };
 
+  // Create multiple issuances, for testing purposes
+  static createMultipleIssuances = async (req: Request, res: Response) => {
+    const issuances = req.body;
+    const newIssuances = await Issuance.insertMany(issuances);
+    res.status(201).json(newIssuances);
+  };
+
   // Retrieve an issuance by its ID
   static getIssuanceById = async (req: Request, res: Response) => {
     const { id } = req.params;

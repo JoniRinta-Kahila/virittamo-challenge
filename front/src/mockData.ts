@@ -1,5 +1,7 @@
 import { DeviceDetails } from "../../shared/types/device";
+import { DeviceIssuanceInfo } from "../../shared/types/issuanceInfo";
 
+// 50 devices
 export const mockDevices: DeviceDetails[] = [
   {
     name: 'iPhone 12',
@@ -250,5 +252,81 @@ export const mockDevices: DeviceDetails[] = [
     name: 'Zenfone 7 Pro',
     manufacturer: 'Asus',
     deviceNumber: '456789'
+  },
+]
+
+// Issuance mock data
+export const mockIssuances: DeviceIssuanceInfo[] = [
+  {
+    deviceDetails: mockDevices[0],
+    recipientDetails: {
+      name: 'John Doe',
+      department: 'IT',
+    },
+    dateOfIssue: '2021-06-01T00:00:00.000Z',
+    returningDate: '2021-06-30T00:00:00.000Z',
+  },
+  {
+    deviceDetails: mockDevices[0],
+    recipientDetails: {
+      name: 'Jane Doe',
+      department: 'HR',
+    },
+    dateOfIssue: '2021-07-01T00:00:00.000Z',
+    returningDate: '2021-07-31T00:00:00.000Z',
+  },
+  {
+    deviceDetails: mockDevices[0],
+    recipientDetails: {
+      name: 'John Smith',
+      department: 'Marketing',
+    },
+    dateOfIssue: '2021-08-01T00:00:00.000Z',
+    returningDate: '2021-08-31T00:00:00.000Z',
+  },
+  {
+    deviceDetails: mockDevices[0],
+    recipientDetails: {
+      name: 'Jane Smith',
+      department: 'Sales',
+    },
+    dateOfIssue: '2021-09-01T00:00:00.000Z',
+    returningDate: '2021-09-30T00:00:00.000Z',
+  },
+  {
+    deviceDetails: mockDevices[0],
+    recipientDetails: {
+      name: 'John Doe',
+      department: 'IT',
+    },
+    dateOfIssue: '2021-10-01T00:00:00.000Z',
+    returningDate: '2021-10-31T00:00:00.000Z',
+  },
+  {
+    deviceDetails: mockDevices[0],
+    recipientDetails: {
+      name: 'Jane Doe',
+      department: 'HR',
+    },
+    dateOfIssue: '2021-11-01T00:00:00.000Z',
+    returningDate: '2021-11-30T00:00:00.000Z',
+  },
+  {
+    deviceDetails: mockDevices[0],
+    recipientDetails: {
+      name: 'John Smith',
+      department: 'Marketing',
+    },
+    dateOfIssue: '2021-12-01T00:00:00.000Z',
+    returningDate: '2021-12-31T00:00:00.000Z',
+  },
+  {
+    deviceDetails: mockDevices[0],
+    recipientDetails: {
+      name: 'Jane Smith',
+      department: 'Sales',
+    },
+    dateOfIssue: '2022-01-01T00:00:00.000Z',
+    returningDate: '2022-01-31T00:00:00.000Z',
   },
 ]

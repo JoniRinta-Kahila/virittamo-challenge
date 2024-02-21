@@ -8,6 +8,9 @@ const router = express.Router();
 router.route('/device/:deviceId')
   .get(handleAsyncError(IssuanceController.getIssuancesByDeviceId));
 
+// Route for creating multiple issuances, for testing purposes
+router.post('/multiple', handleAsyncError(IssuanceController.createMultipleIssuances));
+
 // Routes for individual issuances by ID
 router.route('/:id')
   .get(handleAsyncError(IssuanceController.getIssuanceById))
